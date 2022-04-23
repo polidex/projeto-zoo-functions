@@ -1,14 +1,29 @@
 const data = require('../data/zoo_data');
 
+const empregados = data.employees;
+
 function isManager(id) {
-  // const checkManager = data.employees.map((employee) => employee.managers);
-  // return checkManager?
+  let result = false;
+  empregados.map((person) => {
+    if (person.managers.includes(id)) {
+      result = true;
+    }
+    return result;
+  });
+  return result;
 }
 
-console.log(isManager('4b40a139-d4dc-4f09-822d-ec25e819a5ad'));
-
 function getRelatedEmployees(managerId) {
-  // seu código aqui
+  if (isManager(managerId)) {
+    const subordinate = [];
+    empregados.map((person) => {
+      if (person.managers.includes(managerId)) {
+        subordinate.push(`${person.firstName} ${person.lastName}`);
+      }
+      return subordinate;
+    });
+    return subordinate;
+  } throw new Error('O id inserido não é de uma pessoa colaboradora gerente!');
 }
 
 module.exports = { isManager, getRelatedEmployees };
