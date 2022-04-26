@@ -2,28 +2,10 @@ const data = require('../data/zoo_data');
 
 const animals = data.species;
 
-function nomeAnimais(residents, sex) {
-  let result = [];
-  if (sex === undefined) {
-    result = residents.map((resident) => resident.name);
-  }
-  if (sex !== undefined) {
-    result = residents.reduce((acc, resident) => {
-      if (resident.sex === sex) {
-        acc.push(resident.name);
-      }
-      return acc;
-    }, []);
-  }
-  return result;
+function getAnimalMap(options) {
+  return !options || !options.includeNames ? semParametro() : comParametro(options);
 }
 
-function isSorted(listAnimais, sorted) {
-  if (sorted) {
-    return listAnimais.sort();
-  }
-  return listAnimais;
-}
 function semParametro() {
   const geografico = { NE: [], NW: [], SE: [], SW: [] };
   animals.map((animal) => {
@@ -50,8 +32,27 @@ function comParametro(options) {
   return geografico;
 }
 
-function getAnimalMap(options) {
-  return !options || !options.includeNames ? semParametro() : comParametro(options);
+function isSorted(listAnimais, sorted) {
+  if (sorted) {
+    return listAnimais.sort();
+  }
+  return listAnimais;
+}
+
+function nomeAnimais(residents, sex) {
+  let result = [];
+  if (sex === undefined) {
+    result = residents.map((resident) => resident.name);
+  }
+  if (sex !== undefined) {
+    result = residents.reduce((acc, resident) => {
+      if (resident.sex === sex) {
+        acc.push(resident.name);
+      }
+      return acc;
+    }, []);
+  }
+  return result;
 }
 
 module.exports = getAnimalMap;
